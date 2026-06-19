@@ -157,7 +157,7 @@ function renderTable(rows) {
             <td class="td-size">${fmtSize(row.file_size)}</td>
             <td class="td-action">
               ${isOnline
-                ? `<button class="btn-open" onclick="openExplorer(window._rows[${i}])">📁 open</button>
+                ? `${!row.display_path.startsWith('/') ? `<button class="btn-open" onclick="openExplorer(window._rows[${i}])">📁 open</button>` : ''}
                    <button class="btn-open" onclick="copyPath(window._rows[${i}])">📋 copy</button>`
                 : `<span class="badge-offline">OFFLINE</span>`
               }
