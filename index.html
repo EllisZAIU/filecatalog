@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Catalog</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="catalog.css">
+</head>
+<body>
+
+<header>
+  <h1>// FILE_CATALOG</h1>
+  <span class="subtitle" id="hdr-stats">loading volumes...</span>
+  <button class="btn-scan" id="scanBtn">⟳ MANAGE</button>
+</header>
+
+<div class="controls">
+  <input type="text" id="searchInput" placeholder="search filename..." autofocus>
+  <select id="volumeSelect">
+    <option value="">all volumes</option>
+  </select>
+  <select id="searchField">
+    <option value="filename">Filename</option>
+    <option value="path">Path</option>
+    <option value="both">Both</option>
+  </select>
+  <select id="fileType">
+    <option value="all">all types</option>
+    <option value="video">video</option>
+    <option value="audio">audio</option>
+    <option value="image">images</option>
+    <option value="document">documents</option>
+  </select>
+  <button id="searchBtn">SEARCH</button>
+</div>
+
+<div class="status" id="status"></div>
+
+<div class="table-wrap" id="tableWrap">
+  <div class="empty">enter a search term to begin</div>
+</div>
+
+<div class="pagination" id="pagination"></div>
+
+<!-- ── Manage Modal ── -->
+<div class="modal-overlay" id="scanModal">
+  <div class="modal">
+
+    <!-- Tabs -->
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="tabScan" onclick="switchTab('scan')">SCAN</button>
+      <button class="modal-tab" id="tabDelete" onclick="switchTab('delete')">DELETE</button>
+    </div>
+
+    <!-- Scan tab -->
+    <div id="paneScan">
+      <div class="modal-path" id="browserPath">/mnt</div>
+
+      <div class="browser" id="browser">
+        <div class="empty">loading...</div>
+      </div>
+
+      <div class="modal-fields">
+        <label>Volume Name</label>
+        <input type="text" id="scanVolume" placeholder="e.g. MediaA">
+        <label style="margin-top:0.5rem">UNC Path (for Windows copy)</label>
+        <input type="text" id="scanUncPath" placeholder="e.g. \\elsa\MediaA">
+      </div>
+
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-bar-outer">
+          <div class="progress-bar-inner" id="progressBar"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">Starting...</div>
+        <div class="progress-current" id="progressCurrent"></div>
+      </div>
+
+      <div class="modal-actions" id="modalActions">
+        <button class="btn-cancel" id="cancelBtn">CANCEL</button>
+        <button id="startScanBtn">START SCAN</button>
+      </div>
+    </div>
+
+    <!-- Delete tab -->
+    <div id="paneDelete" style="display:none">
+      <div class="delete-warning">
+        ⚠ Deleting a volume removes it and all cataloged files permanently.
+        This cannot be undone.
+      </div>
+
+      <div class="modal-fields">
+        <label>Select Volume to Delete</label>
+        <select id="deleteVolumeSelect">
+          <option value="">— select a volume —</option>
+        </select>
+      </div>
+
+      <div class="delete-confirm" id="deleteConfirm" style="display:none">
+        <label>Type the volume name to confirm</label>
+        <input type="text" id="deleteConfirmInput" placeholder="">
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeScanModal()">CANCEL</button>
+        <button class="btn-danger" id="deleteBtn" disabled onclick="deleteVolume()">DELETE</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

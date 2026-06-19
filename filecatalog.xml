@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>FileCatalog</Name>
+  <Repository>driven01/filecatalog:latest</Repository>
+  <Registry>https://hub.docker.com/r/driven01/filecatalog</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/EllisZAIU/filecatalog</Support>
+  <Project>https://github.com/EllisZAIU/filecatalog</Project>
+  <Overview>
+    A self-contained NAS file indexer with a web-based search UI and built-in volume scanner.
+    Recursively catalogs your NAS shares into a searchable index. Search by filename or path,
+    filter by file type, copy Windows UNC paths to clipboard, and scan new volumes directly
+    from the browser. No external database required — uses SQLite stored in a mapped volume.
+  </Overview>
+  <Category>Tools: Productivity:</Category>
+  <WebUI>http://[IP]:[PORT:3030]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/EllisZAIU/filecatalog/main/filecatalog.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/EllisZAIU/filecatalog/main/icon.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+
+  <Config Name="Web UI Port" Target="3030" Default="3030" Mode="tcp"
+          Description="Port for the web interface" Type="Port" Display="always" Required="true" Mask="false">3030</Config>
+
+  <Config Name="API Host" Target="API_HOST" Default="" Mode=""
+          Description="IP address or hostname of your UNRAID server — used by the browser to reach the API (e.g. 192.168.1.100)"
+          Type="Variable" Display="always" Required="true" Mask="false"></Config>
+
+  <Config Name="Database Storage" Target="/data" Default="/mnt/user/appdata/filecatalog/data" Mode="rw"
+          Description="Where the SQLite database file is stored on the host"
+          Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/filecatalog/data</Config>
+
+  <Config Name="NAS Shares" Target="/mnt/user" Default="/mnt/user" Mode="ro"
+          Description="Mount your UNRAID user shares so the scanner can index them"
+          Type="Path" Display="always" Required="true" Mask="false">/mnt/user</Config>
+
+  <Config Name="Port" Target="PORT" Default="3030" Mode=""
+          Description="Internal port the server listens on (change only if needed)"
+          Type="Variable" Display="advanced" Required="false" Mask="false">3030</Config>
+
+  <Config Name="Database Path" Target="DB_PATH" Default="/data/filecatalog.db" Mode=""
+          Description="Path to the SQLite database file inside the container"
+          Type="Variable" Display="advanced" Required="false" Mask="false">/data/filecatalog.db</Config>
+
+</Container>
