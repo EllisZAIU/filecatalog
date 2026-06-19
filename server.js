@@ -290,10 +290,10 @@ app.get('/api/search', (req, res) => {
 
     const fileType = req.query.file_type || 'all';
     if (fileType !== 'all' && fileTypes[fileType]) {
-      const exts         = fileTypes[fileType];
-      const placeholders = exts.map(() => '?').join(', ');
-      conditions.push(`LOWER(SUBSTR(f.filename, INSTR(f.filename, '.') + 1)) IN (${placeholders})`);
-      params.push(...exts);
+      const exts = fileTypes[fileType];
+      const extConditions = exts.map(() => `LOWER(f.filename) LIKE ?`).join(' OR ');
+      conditions.push(`(${extConditions})`);
+      params.push(...exts.map(e => `%.${e}`));
     }
 
     if (volumeId) {
